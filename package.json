@@ -83,5 +83,21 @@
     "promises-es6-tests": "^0.5.0",
     "uglify-js": "2.7.3",
     "evalmd": "^0.0.17"
+  },
+  "wilton": {
+    "excludes": [
+      "node_modules",
+      "test",
+      "test-sham",
+      "Gruntfile.js",
+      "bower.json",
+      "component.json",
+      "es6-sham.js",
+      "es6-sham.map",
+      "es6-sham.min.js",
+      "es6-shim.map",
+      "es6-shim.min.js",
+      "testling.html"
+    ]
   }
 }

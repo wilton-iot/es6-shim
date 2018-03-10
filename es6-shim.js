@@ -2658,6 +2658,9 @@
     // It serves as a proxy for a number of other bugs in early Promise
     // implementations.
     var promiseResolveBroken = (function (Promise) {
+      if ("undefined" === typeof(Promise)) {
+          return true;
+      }
       var p = Promise.resolve(5);
       p.constructor = {};
       var p2 = Promise.resolve(p);
@@ -2671,6 +2674,9 @@
 
     // Chrome 46 (probably older too) does not retrieve a thenable's .then synchronously
     var getsThenSynchronously = supportsDescriptors && (function () {
+      if ("undefined" === typeof(Promise)) {
+          return true;
+      }
       var count = 0;
       var thenable = Object.defineProperty({}, 'then', { get: function () { count += 1; } });
       Promise.resolve(thenable);
@@ -2683,8 +2689,10 @@
       this.then = p.then;
       this.constructor = BadResolverPromise;
     };
-    BadResolverPromise.prototype = Promise.prototype;
-    BadResolverPromise.all = Promise.all;
+    if ("undefined" !== typeof(Promise)) {
+        BadResolverPromise.prototype = Promise.prototype;
+        BadResolverPromise.all = Promise.all;
+    }
     // Chrome Canary 49 (probably older too) has some implementation bugs
     var hasBadResolverPromise = valueOrFalseIfThrows(function () {
       return !!BadResolverPromise.all([1, 2]);
